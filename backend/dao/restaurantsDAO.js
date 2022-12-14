@@ -2,13 +2,13 @@ import mongodb from "mongodb"
 const ObjectId = mongodb.ObjectID
 let restaurants
 
-export default class RestaurantsDAO {
+export default class RestaurantsDAO {//todo
   static async injectDB(conn) {
-    if (restaurants) {
+    if (restaurants) {//todo
       return
     }
     try {
-      restaurants = await conn.db(process.env.RESTREVIEWS_NS).collection("restaurants")
+      restaurants = await conn.db(process.env.RESTREVIEWS_NS).collection("sample_restaurants") //todo
     } catch (e) {
       console.error(
         `Unable to establish a collection handle in restaurantsDAO: ${e}`,
@@ -16,30 +16,30 @@ export default class RestaurantsDAO {
     }
   }
 
-  static async getRestaurants({
+  static async getRestaurants({//todo
     filters = null,
     page = 0,
-    restaurantsPerPage = 20,
+    restaurantsPerPage = 20,//todo
   } = {}) {
     let query
     if (filters) {
       if ("name" in filters) {
-        query = { $text: { $search: filters["name"] } }
+        query = { $text: { $search: filters["name"] } }//todo
       } else if ("cuisine" in filters) {
-        query = { "cuisine": { $eq: filters["cuisine"] } }
+        query = { "cuisine": { $eq: filters["cuisine"] } }//todo
       } else if ("zipcode" in filters) {
-        query = { "address.zipcode": { $eq: filters["zipcode"] } }
+        query = { "address.zipcode": { $eq: filters["zipcode"] } } //todo
       }
     }
 
     let cursor
     
     try {
-      cursor = await restaurants
+      cursor = await restaurants//todo
         .find(query)
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`)
-      return { restaurantsList: [], totalNumRestaurants: 0 }
+      return { restaurantsList: [], totalNumRestaurants: 0 }//todo
     }
 
     const displayCursor = cursor.limit(restaurantsPerPage).skip(restaurantsPerPage * page)
@@ -66,7 +66,7 @@ export default class RestaurantsDAO {
         },
               {
                   $lookup: {
-                      from: "reviews",
+                      from: "reviews",//todo 
                       let: {
                           id: "$_id",
                       },
@@ -74,7 +74,7 @@ export default class RestaurantsDAO {
                           {
                               $match: {
                                   $expr: {
-                                      $eq: ["$restaurant_id", "$$id"],
+                                      $eq: ["$restaurant_id", "$$id"], //todo
                                   },
                               },
                           },
@@ -84,7 +84,7 @@ export default class RestaurantsDAO {
                               },
                           },
                       ],
-                      as: "reviews",
+                      as: "reviews",//todo
                   },
               },
               {

@@ -1,6 +1,8 @@
 import http from "../http-common";
 
 class RestaurantDataService {
+ /* static getAll(page = 0){return http.get(`restaurants?page=${page}`);}*/
+  
   getAll(page = 0) {
     return http.get(`restaurants?page=${page}`);
   }
@@ -14,15 +16,15 @@ class RestaurantDataService {
   } 
 
   createReview(data) {
-    return http.post("/review-new", data);
+    return http.post("/review_new", data);
   }
 
   updateReview(data) {
-    return http.put("/review-edit", data);
+    return http.put("/review_edit", data);
   }
 
   deleteReview(id, userId) {
-    return http.delete(`/review-delete?id=${id}`, {data:{user_id: userId}});
+    return http.delete(`/review_delete?id=${id}`, {data:{user_id: userId}});
   }
 
   getCuisines(id) {
