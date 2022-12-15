@@ -50,7 +50,7 @@ const RestaurantsList = props => {
         
       })
       .catch(e => {
-        console.log(e);
+        console.log('there was an error --> '+e);
       });
   };
 

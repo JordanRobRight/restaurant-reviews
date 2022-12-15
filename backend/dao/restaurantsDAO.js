@@ -8,7 +8,8 @@ export default class RestaurantsDAO {//todo
       return
     }
     try {
-      restaurants = await conn.db(process.env.RESTREVIEWS_NS).collection("sample_restaurants") //todo
+      restaurants = await conn.db(process.env.RESTREVIEWS_NS).collection("restaurants") 
+      //restaurants = await conn.db("sample_restaurants").collection("restaurants")
     } catch (e) {
       console.error(
         `Unable to establish a collection handle in restaurantsDAO: ${e}`,
