@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RestaurantDataService from "../services/restaurant";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Restaurant = props => {
   const initialRestaurantState = {
@@ -10,22 +11,31 @@ const Restaurant = props => {
     cuisine: "",
     reviews: []
   };
+
   const [restaurant, setRestaurant] = useState(initialRestaurantState);
 
   const getRestaurant = id => {
     RestaurantDataService.get(id)
       .then(response => {
         setRestaurant(response.data);
-        console.log(response.data);
+        console.log("is this getting run??? "+response.data);
       })
       .catch(e => {
-        console.log(e);
+        console.log("here is that error--> "+e);
       });
   };
 
   useEffect(() => {
     getRestaurant(props.match.params.id);
+    console.log("is this getting run??? "+ props.match.params.id);
   }, [props.match.params.id]);
+
+ /* useEffect(()=> {
+    axios.get('https://randomuser.me/api').then((response)=>{
+      console.log(response.date);
+    });
+
+  }),[];*/
 
   const deleteReview = (reviewId, index) => {
     RestaurantDataService.deleteReview(reviewId, props.user.id)
