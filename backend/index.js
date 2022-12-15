@@ -9,20 +9,20 @@ const MongoClient = mongodb.MongoClient
 const port = process.env.PORT || 8000
 
 MongoClient.connect(
-  process.env.RESTREVIEWS_DB_URI, //todo restaurants needs to be updated to pateints
+  process.env.RESTREVIEWS_DB_URI,
   {
-    poolSize: 50,
-    wtimeout: 2500,
-    useNewUrlParse: true }
+    maxPoolSize: 50,
+    wtimeoutMS: 2500,
+    useNewUrlParser: true }
   )
   .catch(err => {
     console.error(err.stack)
     process.exit(1)
   })
-  .then(async client=>{
+  .then(async client => {
     await RestaurantsDAO.injectDB(client)
     await ReviewsDAO.injectDB(client)
-    app.listen(port,()=>{
-        console.log(`listening to the port ${port}`);
-    });
-});
+    app.listen(port, () => {
+      console.log(`listening on port ${port}`)
+    })
+  })
