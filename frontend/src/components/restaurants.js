@@ -27,7 +27,7 @@ const Restaurant = props => {
 
   useEffect(() => {
     getRestaurant(props.match.params.id);
-    console.log("is this getting run??? "+ props.match.params.id);
+    //console.log("is this getting run??? "+ props.match.params.id);
   }, [props.match.params.id]);
 
  /* useEffect(()=> {
