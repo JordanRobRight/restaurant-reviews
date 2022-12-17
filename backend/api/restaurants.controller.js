@@ -39,7 +39,7 @@ export default class RestaurantsController {
       }
       res.json(restaurant)
     } catch (e) {
-      console.log(`api, ${e}`)
+      //console.log(`api, ${e}`)
       res.status(500).json({ error: e })
     }
   }
@@ -49,7 +49,7 @@ export default class RestaurantsController {
       let cuisines = await RestaurantsDAO.getCuisines()
       res.json(cuisines)
     } catch (e) {
-      console.log(`api, ${e}`)
+      //console.log(`api, ${e}`)
       res.status(500).json({ error: e })
     }
   }

@@ -6,6 +6,8 @@ import AddReview from "./components/add-review";
 import Restaurant from "./components/restaurants";
 import RestaurantsList from "./components/restaurants-list";
 import Login from "./components/login";
+import Signup from "./components/secureSignup";
+import SecureLogin from "./components/secureLogin";
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -36,9 +38,12 @@ function App() {
                 Logout {user.name}
               </a>
             ) : (            
-            <Link to={"/login"} className="nav-link">
-              Login
-            </Link>
+            <div>
+              <Link to={"/login"} className="nav-link">
+                Login
+              </Link>
+              
+            </div>
             )}
 
           </li>

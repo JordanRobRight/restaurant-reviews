@@ -16,8 +16,13 @@ const AddReview = props => {
   const [submitted, setSubmitted] = useState(false);
 
   const handleInputChange = event => {
-    setReview(event.target.value);
+    const { review, value} = event.target;
+    const sanitizedReview = value.replace(/[^a-zA-Z0-9 \.]+/g, '')
+    setReview(sanitizedReview);
   };
+  /*const handleInputChange = event => {
+    setReview(event.target.value);
+  };*/ 
 
   const saveReview = () => {
     var data = {
@@ -32,19 +37,19 @@ const AddReview = props => {
       RestaurantDataService.updateReview(data)
         .then(response => {
           setSubmitted(true);
-          console.log(response.data);
+          //console.log(response.data);
         })
         .catch(e => {
-          console.log(e);
+          //console.log(e);
         });
     } else {
       RestaurantDataService.createReview(data)
         .then(response => {
           setSubmitted(true);
-          console.log(response.data);
+          //console.log(response.data);
         })
         .catch(e => {
-          console.log(e);
+          //console.log(e);
         });
     }
 

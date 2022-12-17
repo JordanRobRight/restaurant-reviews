@@ -16,12 +16,14 @@ const RestaurantsList = props => {
 
   const onChangeSearchName = e => {
     const searchName = e.target.value;
-    setSearchName(searchName);
+    const sanitizedSearchName = searchName.replace(/[^a-zA-Z0-9]/g, '');
+    setSearchName(sanitizedSearchName);
   };
 
   const onChangeSearchZip = e => {
     const searchZip = e.target.value;
-    setSearchZip(searchZip);
+    const sanitizedZip = searchZip.replace(/[^0-9]/g, '');
+    setSearchZip(sanitizedZip);
   };
 
   const onChangeSearchCuisine = e => {
@@ -33,24 +35,24 @@ const RestaurantsList = props => {
   const retrieveRestaurants = () => {
     RestaurantDataService.getAll()
       .then(response => {
-        console.log(response.data);
+        //console.log(response.data);
         setRestaurants(response.data.restaurants);
         
       })
       .catch(e => {
-        console.log(e);
+        //console.log(e);
       });
   };
 
   const retrieveCuisines = () => {
     RestaurantDataService.getCuisines()
       .then(response => {
-        console.log(response.data);
+        //console.log(response.data);
         setCuisines(["All Cuisines"].concat(response.data));
         
       })
       .catch(e => {
-        console.log(e);
+        //console.log(e);
       });
   };
 
@@ -61,11 +63,11 @@ const RestaurantsList = props => {
   const find = (query, by) => {
     RestaurantDataService.find(query, by)
       .then(response => {
-        console.log(response.data);
+        //console.log(response.data);
         setRestaurants(response.data.restaurants);
       })
       .catch(e => {
-        console.log(e);
+        //console.log(e);
       });
   };
 
@@ -129,6 +131,7 @@ const RestaurantsList = props => {
           <select onChange={onChangeSearchCuisine}>
              {cuisines.map(cuisine => {
                return (
+                //  deepcode ignore ReactMissingArrayKeys: <please specify a reason of ignoring this>
                  <option value={cuisine}> {cuisine.substr(0, 20)} </option>
                )
              })}
@@ -148,8 +151,10 @@ const RestaurantsList = props => {
       <div className="row">
         {restaurants.map((restaurant) => {
           const address = `${restaurant.address.building} ${restaurant.address.street}, ${restaurant.address.zipcode}`;
+          //const sanitizedAddress = address.replace(/[^a-zA-Z0-9]/g, '');         
           return (
-            <div className="col-lg-4 pb-1">
+           
+            <div className="col-lg-4 pb-1" key={restaurant._id}>
               <div className="card">
                 <div className="card-body">
                   <h5 className="card-title">{restaurant.name}</h5>
@@ -161,6 +166,7 @@ const RestaurantsList = props => {
                   <Link to={"/restaurants/"+restaurant._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
                     View Reviews
                   </Link>
+                  {/* deepcode ignore DOMXSS: <ignored because the rest of the href is not dynamic and will only go to a google maps/place> */}
                   <a target="_blank" href={"https://www.google.com/maps/place/" + address} className="btn btn-primary col-lg-5 mx-1 mb-1">View Map</a>
                   </div>
                 </div>
