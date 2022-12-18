@@ -1,42 +1,41 @@
-import { useState } from "react"
+import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 
-const SecureLogin = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPasword] = useState('');
+function SecureLogin(){
+    const history = useHistory()
 
-    const handleSubmit = async ()=> {
-       // e.preventDefault()
+    async function handleRegister(e){
+        e.preventDefault()
 
-        
+        const form = e.target
+        const user = {
+            email: form[0].value,
+            email: form[1].value,
+        }
+
+        fetch('/secureLogin',{
+            method:'POST',
+            headers:{
+                "Content-type":"application/json"
+            },
+            body: JSON.stringify(user)
+        })
     }
 
+    useEffect(()=>{
+        fetch('/isUserAuth',{
+            headers:{
+                'x-access-token': localStorage.getItem('token')
+            }
+        })
+        .then(res = res.json())
+        .then(data => data.isLoggedIn ? history.push('/dashboard'): null)
+    },[])
     return(
-        <form className="login" onSubmit={handleSubmit}>
-            <h3>Login</h3>
-
-            <label>Email:</label>
-            <input
-                type='email'
-                onChange={(e) => setEmail(e.target.value)}
-                value={email} 
-            />
-
-            <label>Password:</label>
-            <input
-                type='password'
-                onChange={(e) => setPasword(e.target.value)}
-                value={password} 
-            />
-                
-            <button>
-                Login
-            </button>    
-            
-
+        <form onSubmit={event => handleRegister(event)}>
+            <input required type='email'/>
+            <input required type='password'/>
+            <input required type='submit' value='Register'/>
         </form>
     )
-
 }
-
-export default SecureLogin
-
